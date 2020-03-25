@@ -1,0 +1,47 @@
+@import './helpers';
+@import '~nvd3/build/nv.d3.css';
+@import '~material-design-lite/src/material-design-lite.scss';
+@import './scss/material-angular-select';
+@import './scss/layout';
+@import './scss/chip';
+@import './scss/badge';
+@import './scss/slider';
+@import './scss/menu';
+@import './scss/button';
+@import './scss/textfield';
+@import './scss/data-table';
+@import './scss/label';
+@import './scss/list';
+@import './scss/form';
+@import './scss/scroll';
+@import './scss/helper';
+@import './scss/table';
+@import './widgets/link';
+@import './widgets/chart-legend';
+@import './widgets/form';
+@import './widgets/input-group';
+
+.mdl-layout--fixed-drawer>.mdl-layout__drawer header {
+    height: 59px !important;
+    line-height: 56px;
+    background: rgb(14, 48, 64);
+}
+.greenbg
+{
+    background:rgba(26, 188, 156, 0.36);
+}
+.bluebg
+{
+    background:#1abc9c;
+}
+.yellowbg
+{
+    background:#f1c40f;
+}
+
+.map .map__pickup-location .material-icons, .map .map__target-opening-hours .material-icons {
+    color: #00bcd4;
+    margin-top: -2px;
+    margin-right: 5px;
+    font-size: 20px;
+}

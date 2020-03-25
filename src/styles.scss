@@ -1,0 +1,101 @@
+/* You can add global styles to this file, and also import other style files */
+@import './helpers/helpers';
+@import '~nvd3/build/nv.d3.css';
+@import '~material-design-lite/src/material-design-lite.scss';
+@import './helpers/scss/material-angular-select';
+@import './helpers/scss/layout';
+@import './helpers/scss/chip';
+@import './helpers/scss/badge';
+@import './helpers/scss/slider';
+@import './helpers/scss/menu';
+@import './helpers/scss/button';
+@import './helpers/scss/textfield';
+@import './helpers/scss/data-table';
+@import './helpers/scss/label';
+@import './helpers/scss/list';
+@import './helpers/scss/form';
+@import './helpers/scss/scroll';
+@import './helpers/scss/helper';
+@import './helpers/scss/table';
+@import './helpers/widgets/link';
+@import './helpers/widgets/chart-legend';
+@import './helpers/widgets/form';
+@import './helpers/widgets/input-group';
+
+.mdl-layout--fixed-drawer>.mdl-layout__drawer header {
+    height: 59px !important;
+    line-height: 56px;
+    background: rgb(14, 48, 64);
+}
+.greenbg
+{
+    background:rgba(26, 188, 156, 0.36);
+}
+.bluebg
+{
+    background:#1abc9c;
+}
+.yellowbg
+{
+    background:#f1c40f;
+}
+
+.map .map__pickup-location .material-icons, .map .map__target-opening-hours .material-icons {
+    color: #00bcd4;
+    margin-top: -2px;
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+ul.tabs
+{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  text-align: center;
+  padding: 0;
+  li
+  {
+    list-style: none;
+  width: 50%;
+  position: relative;
+  cursor: pointer;
+  padding-bottom: 14px;
+  margin-bottom: -15px;
+  &.active
+  {
+    border-bottom:2px solid rgba(0, 188, 212, 0.9);
+  }
+  &:after{
+    content: "";
+position: absolute;
+width: 100%;
+height: 2px;
+bottom: 0;
+left: 0;
+background-color: rgba(0, 188, 212, 0.9);
+visibility: hidden;
+transform: scaleX(0);
+transition: all 0.3s ease-in-out;
+  }
+  &:hover:after { 
+    visibility: visible;
+    transform: scaleX(1);
+  }
+  }
+}
+.modal-backdrop
+{
+  display: none !important;
+}
+.alert
+{
+  position: absolute !important;
+  z-index: 1;
+  right: 0;
+  top: 30%;
+}

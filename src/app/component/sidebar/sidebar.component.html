@@ -1,0 +1,18 @@
+<header><img src="./assets/images/logo.png"></header>
+<nav class="mdl-navigation">
+  <!-- <base-menu-item *ngFor="let item of menu" [data]="item"></base-menu-item> -->
+  <ul class="sidebar-menu">
+<li *ngFor="let data of menu">
+  <i class="far fa-square"></i>
+  <a
+      *ngIf="data.link"
+      class="mdl-navigation__link"
+      [routerLink]="data.link"
+      (click)="navigate()"
+      ><i *ngIf="data.icon" class="material-icons" role="presentation">{{ data.icon }}</i>{{ data.name }}
+    </a></li>
+
+</ul>
+  <div class="mdl-layout-spacer"></div>
+  
+</nav>

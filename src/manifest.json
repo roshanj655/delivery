@@ -1,0 +1,10 @@
+{
+  "name": "firebase",
+  "icons": [
+    {
+      "src": "/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }],
+    "gcm_sender_id": "1071400308485"
+  }

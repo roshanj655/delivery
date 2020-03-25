@@ -1,0 +1,170 @@
+@import '../../../helpers/helpers';
+
+.message-menu {
+  position: relative;
+}
+
+.messages-dropdown {
+  &.mdl-menu {
+    width: 310px;
+  }
+
+  .label {
+    color: $messages-dropdown-label-text-color;
+  }
+  .mdl-list__item-primary-content {
+    font-weight: 400;
+    line-height: 18px;
+
+    .mdl-list__item-avatar {
+      padding: ($list-avatar-size - $list-icon-size);
+      text-align: center;
+
+      .material-icons {
+        vertical-align: top;
+      }
+
+      .text {
+        font-size: 19px;
+        vertical-align: middle;
+      }
+    }
+
+    .mdl-list__item-sub-title {
+      font-weight: 100;
+      font-size: 12px;
+    }
+  }
+
+  &.mdl-list {
+    .mdl-list__item {
+      @include typo-dropdown-menu-li;
+
+      &:first-child {
+        color: $dropdown-menu-header-font-color;
+      }
+
+      &:last-child {
+        padding-top: $list-min-padding/2;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+
+.map {
+  min-height: 630px;
+  position: relative;
+
+  .map__window {
+    background: $card-title-background-color;
+
+    .gm-style {
+      & > div:nth-of-type(2),
+      & > .gmnoprint:not(.gm-bundled-control),
+      & > .gm-style-cc {
+        display: none;
+      }
+    }
+  }
+.whitebg
+{
+  background-color: #ffffff;
+}
+  .mdl-card__supporting-text {
+    min-height: 185px;
+  }
+
+  h5 {
+    margin-top: 0;
+  }
+
+  div > a {
+    font-size: 1rem;
+  }
+
+  .map__target-location,
+  .map__target-opening-hours {
+    margin-bottom: 10px;
+
+    & > * {
+      vertical-align: middle;
+    }
+
+    .material-icons {
+      color: $color-primary;
+      margin-top: -2px;
+      margin-right: 5px;
+      font-size: 20px;
+    }
+  }
+
+  .map__target-image {
+    background: $card-title-background-color;
+    border-radius: 50%;
+    width: 170px;
+    height: 170px;
+    margin: 0 10px 5px 15px;
+  }
+
+  .map__target-picture {
+    height: 100%;
+    transition: opacity 0.3s;
+    background: url("#{$image-path}/map_target_images_sprite.png") no-repeat top left;
+    background-size: cover;
+  }
+
+  .map__target-info,
+  .map__target-picture {
+    opacity: 1;
+    transition: opacity 0.2s;
+
+    &--hide {
+      opacity: 0;
+    }
+  }
+}
+.mdl-card__title {
+    background-color: $card-title-background-color;
+  }
+  
+  .mdl-card__supporting-text {
+    line-height: 22px;
+    width: calc(100% - #{$card-horizontal-padding*2});
+    overflow: visible;
+  }
+  
+  .mdl-card__actions {
+    padding: 8px 16px;
+  }
+  
+  .mdl-card {
+    height: 100%;
+    overflow: visible;
+  }
+
+.hide
+{
+  display: none;
+}
+h2{
+  margin: 0 0 0px;
+}
+.tab
+{
+  
+  overflow-y: scroll;
+}
+.modal {
+  position: fixed;
+  top: 59px;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  outline: 0;
+}
+

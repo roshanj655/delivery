@@ -1,0 +1,17 @@
+@import '../../../helpers/helpers';
+
+@media screen and (max-width: $layout-screen-size-threshold) {
+  .mdl-layout__header {
+    display: flex !important;
+  }
+}
+.mdl-navigation base-menu-item:nth-child(2) i.material-icons {
+  transform: rotate(180deg);
+}
+li{
+  list-style: none;
+}
+ul{
+  margin: 0;
+    padding: 0;
+}
