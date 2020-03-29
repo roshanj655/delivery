@@ -29,7 +29,7 @@ export class DashboardService {
     return this.http.get(this.apiUrl+"scouts");
   }
   getlatlang(loc):Observable<any>{
-    return this.http.get("https://api.opencagedata.com/geocode/v1/json?q="+loc+"&key=7628bdf130cd467783fa2ba4f7693a97&language=en&pretty=1");
+    return this.http.get("https://api.opencagedata.com/geocode/v1/json?q="+loc+"&key=53d74e25e2d64f76b8e16aa3cbdc97cb&language=en&pretty=1");
   }
 
   addScouts(data):Observable<any>{
