@@ -19,34 +19,23 @@ export class DashboardComponent implements OnInit {
   neworders:any=[];
   ongoingorders:any=[];
   completeorders:any=[];
+  itenary:any=[];
+  scoutTableData:any=[];
+  scout:any;
   map:any;
   message;
   singleScouts:any={};
   x:number=80;
   myLatLng:any = {lat: 28.41252, lng: 77.31977};
+  
   showalert:boolean=false;
-  // markers:any=[
-  //   {
-  //       coords:{lat: 28.411720, lng: 77.299941},
-  //       img:markerImage,
-  //       content:"test"
-  //   },
-  //   {coords:{lat: 28.412833, lng: 77.315802},img:markerImage,content:{"name":"Rakesh","id":1}},
-  //   {coords:{lat: 28.409760, lng: 77.310535},img:markerImage,content:{"name":"Mahesh","id":1}},
-  //   {coords:{lat:28.418142, lng:77.330895},img:markerImage,content:{"name":"Rohan","id":2}},
-  //   {coords:{lat:28.417264, lng:77.320713},img:markerImage,content:{"name":"Mohan","id":3}},//1km
-  //   {coords:{lat:28.418330, lng:77.332922},img:markerImage,content:{"name":"Suresh","id":4}},//2.2km
-  //   {coords:{lat:28.419063, lng:77.341058},img:markerImage,content:{"name":"Naresh","id":5}},//3km
-  //   {coords:{lat:28.419974, lng:77.351234},img:markerImage,content:{"name":"Vivek","id":6}},//4km
-  //   {coords:{lat:28.421045, lng:77.361292},img:markerImage,content:{"name":"Kamlesh","id":7}},//5km
-  //   ];
+  
     markers:any=[];
     public ngOnInit(){
       this.getdata();
-     
-      this.dashService.getlatlang("old faridabad, haryana").subscribe(data=>{
-        //console.log(data.results[0].geometry);
-      })
+      // this.dashService.getlatlang("old faridabad, haryana").subscribe(data=>{
+      //   //console.log(data.results[0].geometry);
+      // })
       $('.tabs').on('click','li',function(){
         
         var tab=$(this).attr('data');
@@ -73,10 +62,10 @@ export class DashboardComponent implements OnInit {
       });
     }
     public ngAfterViewInit() {
+     
       this.dashService.getScouts().subscribe(data=>{
         this.scouts=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
         this.markers=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-        //console.log(this.markers)
         this.initmap(this.myLatLng);
       });
       const userId = 'user001';
@@ -87,25 +76,36 @@ export class DashboardComponent implements OnInit {
     }
     locatTask(taskData)
     {
-     console.log(taskData);
-     
+     this.scoutTableData=this.scouts;
+     this.ongoingorders=this.ongoingorders;
      $("#oid").val(JSON.stringify(taskData));
               document.querySelector('.map__target-title').innerHTML = taskData.user;
               document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City},${taskData.pickDetails.State}`;
               document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.dropDetails.Address},${taskData.dropDetails.City},${taskData.dropDetails.State}`;
               document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
               
-      this.initmap({lat:parseFloat(taskData.pickDetails.lat),lng:parseFloat(taskData.pickDetails.lng)})
-     
+      this.initmap({lat:parseFloat(taskData.pickDetails.lat),lng:parseFloat(taskData.pickDetails.lng)});
+      this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
       
+    }
+    getSdataFromAssignBut(sData)
+    {
+      this.singleScouts=sData;
+      $("#sdata").val(JSON.stringify(sData));
+    }
+    getSItenary(data)
+    {
+      console.log(data);
+      this.itenary=data.oData;
+      this.scout=data.sData;
     }
     scoutDetails(scoutData)
     {
       console.log(scoutData);
       
      document.querySelector('.map__target-title').innerHTML = scoutData.user;
-     document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${scoutData.location}`;
-     document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">query_builder</i>${scoutData.userDetails.Address},${scoutData.userDetails.City},${scoutData.userDetails.State}`;
+     document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${scoutData.userDetails.Address},${scoutData.userDetails.City},${scoutData.userDetails.State}`;
+     document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">query_builder</i>${scoutData.userDetails.orderid}`;
      document.querySelector('.map__target-description').innerHTML = `${scoutData.description} <input type="hidden" id="sdata"> <button id="astask" data="`+JSON.stringify(scoutData)+`"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"  data-toggle="modal" data-target="#myModal">assign task</button>`;
      (document.querySelector('.map__target-picture') as HTMLElement).style.backgroundPositionX = scoutData.image;
      document.querySelector('.map__target-picture').classList.toggle('map__target-picture--hide');
@@ -194,15 +194,24 @@ export class DashboardComponent implements OnInit {
         }
       }
      
+     
+
       assigntask()
       {
         var a=JSON.parse($(document).find("#sdata").val());
         var order=JSON.parse($("#oid").val());
         a.ScoutLocation.lng=a.ScoutLocation.lng.toString();
         a.ScoutLocation.lat=a.ScoutLocation.lat.toString();
-        a.userDetails.orderid=order.id;
+        if($.isArray(a.userDetails.orderid))
+        {
+          a.userDetails.orderid.push(order.id);
+           
+        }
+        else{
+          a.userDetails.orderid=[order.id];
+        }
+       
         order.status=1;
-        console.log(a);
         this.dashService.addScouts(a).subscribe(data=>{
           //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
           console.log(data)

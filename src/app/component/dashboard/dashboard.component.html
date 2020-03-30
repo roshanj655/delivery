@@ -94,10 +94,12 @@
   <div class="mdl-cell mdl-cell--3-col-desktop mdl-cell--3-col-tablet mdl-cell--4-col-phone whitebg">
     <div class="mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">Scout</h2>
+        <h2 class="mdl-card__title-text">Scout's Task</h2>
+        <!-- <br> -->
+        <!-- <span>Drag and drop for change priority</span> -->
       </div>
       <div class="mdl-card__supporting-text">
-        <ul
+        <!-- <ul
         class="mdl-list messages-dropdown">
         <li *ngFor="let item of scouts" (click)="scoutDetails(item)" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
           <span class="mdl-list__item-primary-content">
@@ -110,14 +112,19 @@
               class="mdl-list__item-sub-title">{{ item.id }}</span>
           </span>
           <span class="mdl-list__item-secondary-content">
-            <span class="label label--transparent">{{item.userDetails?.orderid?'Assigned':'Free'}}<span *ngIf="item.userDetails?.orderid===''">Assign</span></span>
+            <span class="label label--transparent"  data-toggle="modal" data-target="#myModal1" (click)="openite(ongoingorders,item)">{{item.userDetails?.orderid?'Assigned':'Free'}}<span *ngIf="item.userDetails?.orderid===''">Assign</span></span>
           </span>
         </li>
-      </ul>
+      </ul> -->
+      <app-scouts-assigned-orders [onGoingOrder]="itenary" [scout]="scout"></app-scouts-assigned-orders>
       </div>
     </div>
   </div>
+  <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone whitebg">
+    <app-scouts-table [scouts]="scoutTableData" [ongoingorders]="ongoingorders" (sOrders)="getSItenary($event)" (cScout)="getSdataFromAssignBut($event)"></app-scouts-table>
+  </div>
 <input type="hidden" id="oid">
+<input type="hidden" id="sdata">
   <div id="myModal" class="modal fade" role="dialog" *ngIf="singleScouts">
     <div class="modal-dialog">
   
@@ -161,6 +168,7 @@
   
     </div>
   </div>
+  
   <div class="alert alert-success fade in alert-dismissible show" style="margin-top:18px;" *ngIf="showalert">
     <button type="button" class="close" (click)="close()" aria-label="Close">
        <span aria-hidden="true" style="font-size:20px">×</span>

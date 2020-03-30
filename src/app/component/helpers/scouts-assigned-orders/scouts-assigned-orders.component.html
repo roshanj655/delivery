@@ -1,0 +1,6 @@
+
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let item of onGoingOrder" cdkDrag>{{item.pickDetails.Address}}, {{item.pickDetails.City}}, {{item.pickDetails.State}}</div>
+              </div>
+       
+  

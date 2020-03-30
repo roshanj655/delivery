@@ -13,7 +13,9 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ScoutsAssignedOrdersComponent } from './component/helpers/scouts-assigned-orders/scouts-assigned-orders.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ScoutsTableComponent } from './component/helpers/scouts-table/scouts-table.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SidebarComponent,
     DashboardComponent,
     OrdersComponent,
+    ScoutsAssignedOrdersComponent,
+    ScoutsTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
