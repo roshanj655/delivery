@@ -9,7 +9,7 @@
       <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.user }}</td>
       <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.Address }}</td>
       <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.City }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.State }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item | distance:cOrder.pickDetails }}</td>
       <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.orderid }}</td>
       <td class="mdl-data-table__cell--non-numeric"><button id="astask"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue" (click)="openmodal(item)"  data-toggle="modal" data-target="#myModal">assign task</button></td>
     </tr>

@@ -12,7 +12,7 @@
         <div class="tab tab1">
       <ul
       class="mdl-list messages-dropdown">
-      <li *ngFor="let item of neworders"  (click)="locatTask(item)" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
+      <li *ngFor="let item of neworders"  (click)="locatTask(item)" class="mdl-list__item mdl-list__item--two-line list__item--border-top {{item.classprop}}">
         <span class="mdl-list__item-primary-content">
           <span class="mdl-list__item-avatar"
                 ngClass="background-color--{{ item.user }} {{item.status}}">
@@ -121,7 +121,7 @@
     </div>
   </div>
   <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone whitebg">
-    <app-scouts-table [scouts]="scoutTableData" [ongoingorders]="ongoingorders" (sOrders)="getSItenary($event)" (cScout)="getSdataFromAssignBut($event)"></app-scouts-table>
+    <app-scouts-table [scouts]="scoutTableData" [cOrder]="cOrder" [ongoingorders]="ongoingorders" (sOrders)="getSItenary($event)" (cScout)="getSdataFromAssignBut($event)"></app-scouts-table>
   </div>
 <input type="hidden" id="oid">
 <input type="hidden" id="sdata">

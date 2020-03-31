@@ -1,10 +1,9 @@
 import { Component, OnInit, HostBinding, ElementRef } from '@angular/core';
 import { DashboardService } from 'src/services/dashboard.service';
 import * as $ from 'jquery';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
-import { element } from 'protractor';
 import { MessagingService } from 'src/app/messaging.service';
-import { HttpClient } from '@angular/common/http';
+import {timer} from 'rxjs';
+import {take} from 'rxjs/operators'; 
 declare const google: any;
 const markerImage = 'assets/images/marker.png';
 @Component({
@@ -25,6 +24,8 @@ export class DashboardComponent implements OnInit {
   map:any;
   message;
   singleScouts:any={};
+  cOrder:any;
+  orderCheck:any[];
   x:number=80;
   myLatLng:any = {lat: 28.41252, lng: 77.31977};
   
@@ -33,9 +34,7 @@ export class DashboardComponent implements OnInit {
     markers:any=[];
     public ngOnInit(){
       this.getdata();
-      // this.dashService.getlatlang("old faridabad, haryana").subscribe(data=>{
-      //   //console.log(data.results[0].geometry);
-      // })
+      
       $('.tabs').on('click','li',function(){
         
         var tab=$(this).attr('data');
@@ -45,12 +44,17 @@ export class DashboardComponent implements OnInit {
         $("."+tab).show();
       })
 
+      timer(1000, 1000*60*5).pipe(
+        take(300)).subscribe(x=>{
+         // do here whatever you want to do here
+         this.checkOrderTime();
+         })
 
     }
     getdata(){
       this.dashService.getOrdersbyStatus(0).subscribe(data=>{
         this.neworders=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-        //console.log(this.neworders);
+        this.checkOrderTime();
       });
       this.dashService.getOrdersbyStatus(1).subscribe(data=>{
         this.ongoingorders=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
@@ -60,6 +64,7 @@ export class DashboardComponent implements OnInit {
         this.completeorders=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
         //console.log(this.messages)
       });
+      
     }
     public ngAfterViewInit() {
      
@@ -78,6 +83,8 @@ export class DashboardComponent implements OnInit {
     {
      this.scoutTableData=this.scouts;
      this.ongoingorders=this.ongoingorders;
+      this.cOrder=taskData;
+      console.log(taskData);
      $("#oid").val(JSON.stringify(taskData));
               document.querySelector('.map__target-title').innerHTML = taskData.user;
               document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City},${taskData.pickDetails.State}`;
@@ -99,25 +106,25 @@ export class DashboardComponent implements OnInit {
       this.itenary=data.oData;
       this.scout=data.sData;
     }
-    scoutDetails(scoutData)
-    {
-      console.log(scoutData);
+    // scoutDetails(scoutData)
+    // {
+    //   console.log(scoutData);
       
-     document.querySelector('.map__target-title').innerHTML = scoutData.user;
-     document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${scoutData.userDetails.Address},${scoutData.userDetails.City},${scoutData.userDetails.State}`;
-     document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">query_builder</i>${scoutData.userDetails.orderid}`;
-     document.querySelector('.map__target-description').innerHTML = `${scoutData.description} <input type="hidden" id="sdata"> <button id="astask" data="`+JSON.stringify(scoutData)+`"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"  data-toggle="modal" data-target="#myModal">assign task</button>`;
-     (document.querySelector('.map__target-picture') as HTMLElement).style.backgroundPositionX = scoutData.image;
-     document.querySelector('.map__target-picture').classList.toggle('map__target-picture--hide');
-     document.querySelector('.map__target-info').classList.toggle('map__target-info--hide');
+    //  document.querySelector('.map__target-title').innerHTML = scoutData.user;
+    //  document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${scoutData.userDetails.Address},${scoutData.userDetails.City},${scoutData.userDetails.State}`;
+    //  document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">query_builder</i>${scoutData.userDetails.orderid}`;
+    //  document.querySelector('.map__target-description').innerHTML = `${scoutData.description} <input type="hidden" id="sdata"> <button id="astask" data="`+JSON.stringify(scoutData)+`"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"  data-toggle="modal" data-target="#myModal">assign task</button>`;
+    //  (document.querySelector('.map__target-picture') as HTMLElement).style.backgroundPositionX = scoutData.image;
+    //  document.querySelector('.map__target-picture').classList.toggle('map__target-picture--hide');
+    //  document.querySelector('.map__target-info').classList.toggle('map__target-info--hide');
      
-     document.getElementById("astask").addEventListener('click',()=>{
-       $("#sdata").val(JSON.stringify(scoutData));
-      this.singleScouts=scoutData;
-     })
+    //  document.getElementById("astask").addEventListener('click',()=>{
+    //    $("#sdata").val(JSON.stringify(scoutData));
+    //   this.singleScouts=scoutData;
+    //  })
      
       
-    }
+    // }
     initmap(mylatlang){
       this.map = new google.maps.Map(document.getElementById('map'), {
         center: mylatlang,
@@ -229,6 +236,20 @@ export class DashboardComponent implements OnInit {
       {
         this.showalert=false;
       }
+
+      checkOrderTime(){
+        this.neworders.forEach(element => {
+          var d= new Date();
+          //d.setMinutes( d.getMinutes() + 5 );
+          var otime=new Date(Date.parse(element.userDetails.orderTime));
+          otime.setMinutes( otime.getMinutes() + 5 );
+          if (d.getTime() > otime.getTime()) 
+          {
+            element.classprop="highlight";
+          }
+       });
+      }
+
     distance(lat1, lon1, lat2, lon2, unit) {
       if ((lat1 == lat2) && (lon1 == lon2)) {
         return 0;

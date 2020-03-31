@@ -9,6 +9,7 @@ export class ScoutsTableComponent implements OnInit {
   headers:any;
   @Input() scouts:any;
   @Input() ongoingorders:any;
+  @Input() cOrder:any;
   @Output() sOrders = new EventEmitter<any>();
   @Output() cScout = new EventEmitter<any>();
   itenary: any=[];
@@ -45,10 +46,10 @@ export class ScoutsTableComponent implements OnInit {
     console.log("table",this.scouts);
     this.headers=[
       "Name",
-      "Address",
-      "City",
-      "State",
-      "Tasks",
+      "Mobile No",
+      "Residential  city",
+      "distance from pickup",
+      "Present tasks",
       "Assign"
     ];
   }
