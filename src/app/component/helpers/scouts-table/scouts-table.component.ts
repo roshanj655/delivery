@@ -47,6 +47,7 @@ export class ScoutsTableComponent implements OnInit {
     this.headers=[
       "Name",
       "Mobile No",
+      "Email",
       "Residential  city",
       "distance from pickup",
       "Present tasks",

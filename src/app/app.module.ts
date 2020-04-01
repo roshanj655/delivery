@@ -17,6 +17,7 @@ import { ScoutsAssignedOrdersComponent } from './component/helpers/scouts-assign
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScoutsTableComponent } from './component/helpers/scouts-table/scouts-table.component';
 import { DistancePipe } from 'src/pipes/distance.pipe';
+import { SubstringPipe } from 'src/pipes/substring.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DistancePipe } from 'src/pipes/distance.pipe';
     OrdersComponent,
     ScoutsAssignedOrdersComponent,
     ScoutsTableComponent,
-    DistancePipe
+    DistancePipe,
+    SubstringPipe
   ],
   imports: [
     BrowserModule,

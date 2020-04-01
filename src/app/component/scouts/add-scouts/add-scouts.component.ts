@@ -10,12 +10,14 @@ import { DashboardService } from 'src/services/dashboard.service';
 
 export class AddScoutsComponent implements OnInit {
   bioSection = this.fb.group({
-    id: ['Scout_01'],
+    id: ['Scout_13'],
     user: [''],
     userDetails: this.fb.group({
       UserType: ['Scout'],
       Address: [''],
       UserGrade: ['Primary'],
+      Email:[''],
+      Phone:[''],
       City: [''],
       State: [''],
      Zip: [''],
