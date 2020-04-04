@@ -94,7 +94,7 @@ transition: all 0.3s ease-in-out;
 }
 .alert
 {
-  position: absolute !important;
+  position: fixed !important;
   z-index: 1;
   right: 0;
   top: 30%;

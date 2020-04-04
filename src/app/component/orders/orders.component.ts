@@ -26,6 +26,7 @@ export class OrdersComponent implements OnInit {
       Zip: [''],
       lat: [''],
       lng: [''],
+      orderTime:Date(),
       comment: ['User can be Customer,Scout or Admin']
     }),
     pickDetails: this.fb.group({
@@ -41,7 +42,7 @@ export class OrdersComponent implements OnInit {
       Comments: "pickDetails"
     }),
     dropDetails: this.fb.group({
-      Date: ["25-051982"],
+      Date: [Date()],
       Name:[''],
       Phone:[''],
       Address: [''],

@@ -31,7 +31,7 @@
     <div class="tab tab2 hide">
     <ul
       class="mdl-list messages-dropdown">
-      <li *ngFor="let item of ongoingorders" (click)="locatTask(item)" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
+      <li *ngFor="let item of ongoingorders" (click)="locatOnGoingTask(item)" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
         <span class="mdl-list__item-primary-content">
           <span class="mdl-list__item-avatar"
                 ngClass="background-color--{{ item.user }} {{item.status}}">
@@ -86,7 +86,7 @@
           <div class="map__pickup-location"></div>
           <div class="map__target-location"></div>
           <div class="map__target-opening-hours"></div>
-          <div class="map__target-description"></div>
+          <div class="map__target-description"><button  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue" *ngIf="showCompleteBut" (click)="completeTask()">Complete Task</button></div>
         </div>
       </div>
     </div>
@@ -172,5 +172,5 @@
   <div class="alert alert-success fade in alert-dismissible show" style="margin-top:18px;" *ngIf="showalert">
     <button type="button" class="close" (click)="close()" aria-label="Close">
        <span aria-hidden="true" style="font-size:20px">×</span>
-     </button>    <strong>Success!</strong> Task assigned.
+     </button>    <strong>Success!</strong> {{succesmsg}}.
    </div>

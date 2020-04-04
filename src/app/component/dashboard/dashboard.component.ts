@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit {
   cOrder:any;
   orderCheck:any[];
   sTableShow:boolean=false;
+  showCompleteBut:boolean=false;
+  succesmsg:string;
   x:number=80;
   myLatLng:any = {lat: 28.41252, lng: 77.31977};
   
@@ -80,8 +82,28 @@ export class DashboardComponent implements OnInit {
     this.message = this.messagingService.currentMessage
     
     }
+    locatOnGoingTask(taskData)
+    {
+      this.showCompleteBut=true;
+      this.sTableShow=true;
+     this.scoutTableData=this.scouts;
+     this.ongoingorders=this.ongoingorders;
+      this.cOrder=taskData;
+      console.log(taskData);
+     $("#oid").val(JSON.stringify(taskData));
+              document.querySelector('.map__target-title').innerHTML = taskData.userDetails.Name?taskData.userDetails.Name:taskData.user;
+              document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City?taskData.pickDetails.City:'NA'},${taskData.pickDetails.State?taskData.pickDetails.State:"NA"}`;
+              document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.dropDetails.Address},${taskData.dropDetails.City?taskData.dropDetails.City:'NA'},${taskData.dropDetails.State?taskData.dropDetails.State:"NA"}`;
+              document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
+              document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
+              
+      this.initmap({lat:parseFloat(taskData.pickDetails.lat),lng:parseFloat(taskData.pickDetails.lng)});
+      this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
+     
+    }
     locatTask(taskData)
     {
+      this.showCompleteBut=false;
       this.sTableShow=true;
      this.scoutTableData=this.scouts;
      this.ongoingorders=this.ongoingorders;
@@ -97,6 +119,7 @@ export class DashboardComponent implements OnInit {
       this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
       
     }
+    
     getSdataFromAssignBut(sData)
     {
       this.singleScouts=sData;
@@ -200,7 +223,18 @@ export class DashboardComponent implements OnInit {
         }
       }
      
-     
+      completeTask()
+      {
+        var order=JSON.parse($("#oid").val());
+        order.status="2";
+        this.dashService.addorders(order).subscribe(data=>{
+          //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
+          console.log(data)
+          this.getdata();
+        });
+        this.showalert=true;
+        this.succesmsg="Task marked as complete";
+      }
 
       assigntask()
       {
@@ -237,6 +271,7 @@ export class DashboardComponent implements OnInit {
           this.getdata();
         });
         this.showalert=true;
+        this.succesmsg="Task assigned to scout";
         //$('#myModal').modal('hide');
         //console.log(data);
       }
