@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   singleScouts:any={};
   cOrder:any;
   orderCheck:any[];
+  sTableShow:boolean=false;
   x:number=80;
   myLatLng:any = {lat: 28.41252, lng: 77.31977};
   
@@ -81,14 +82,15 @@ export class DashboardComponent implements OnInit {
     }
     locatTask(taskData)
     {
+      this.sTableShow=true;
      this.scoutTableData=this.scouts;
      this.ongoingorders=this.ongoingorders;
       this.cOrder=taskData;
       console.log(taskData);
      $("#oid").val(JSON.stringify(taskData));
-              document.querySelector('.map__target-title').innerHTML = taskData.user;
-              document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City},${taskData.pickDetails.State}`;
-              document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.dropDetails.Address},${taskData.dropDetails.City},${taskData.dropDetails.State}`;
+              document.querySelector('.map__target-title').innerHTML = taskData.userDetails.Name?taskData.userDetails.Name:taskData.user;
+              document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City?taskData.pickDetails.City:'NA'},${taskData.pickDetails.State?taskData.pickDetails.State:"NA"}`;
+              document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.dropDetails.Address},${taskData.dropDetails.City?taskData.dropDetails.City:'NA'},${taskData.dropDetails.State?taskData.dropDetails.State:"NA"}`;
               document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
               
       this.initmap({lat:parseFloat(taskData.pickDetails.lat),lng:parseFloat(taskData.pickDetails.lng)});
@@ -133,21 +135,18 @@ export class DashboardComponent implements OnInit {
       this.addmarker(mylatlang);
       
      this.markers.forEach(element => {
-       element.f=function()
-       {
-         this.assigntask.call(this,element);
-       }
+       if(element.ScoutLocation) {
           var dis=this.distance(mylatlang.lat, mylatlang.lng,parseFloat(element.ScoutLocation.lat), parseFloat(element.ScoutLocation.lng),'K');
          if(dis<=this.x)
          {
-             // element.content=dis+" KM";
-         // console.log('newdata',element);
           this.addmarker(element);
          }
+        }
      });
     }
     addmarker(prop)
         {
+          console.log(prop);
           if(prop.ScoutLocation)
           {
           prop.ScoutLocation.lat=parseFloat(prop.ScoutLocation.lat);
@@ -207,22 +206,31 @@ export class DashboardComponent implements OnInit {
       {
         var a=JSON.parse($(document).find("#sdata").val());
         var order=JSON.parse($("#oid").val());
-        a.ScoutLocation.lng=a.ScoutLocation.lng.toString();
-        a.ScoutLocation.lat=a.ScoutLocation.lat.toString();
-        if($.isArray(a.userDetails.orderid))
+       // a.ScoutLocation.lng=typeof a.ScoutLocation.lng=='string'?a.ScoutLocation.lng:a.ScoutLocation.lng.toString();
+       // a.ScoutLocation.lat=typeof a.ScoutLocation.lat=='string'?a.ScoutLocation.lat:a.ScoutLocation.lat.toString();
+        a.fcmtoken="newOrderForScout";
+        var newtask={
+          orderId:order.id,
+          date:Date.now(),
+          status:1
+        };
+        a.pickDetails={"lat":order.pickDetails.lat,"lng":order.pickDetails.lng};
+        a.dropDetails={"lat":order.dropDetails.lat,"lng":order.dropDetails.lng};
+        if($.isArray(a.userDetails.task))
         {
-          a.userDetails.orderid.push(order.id);
+          a.userDetails.task.push(newtask);
            
         }
         else{
-          a.userDetails.orderid=[order.id];
+          a.userDetails.task=[newtask];
         }
-       
-        order.status=1;
+      // console.log(a);
+        order.status="1";
         this.dashService.addScouts(a).subscribe(data=>{
           //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-          console.log(data)
+        //  console.log(data)
         });
+        console.log(order);
         this.dashService.addorders(order).subscribe(data=>{
           //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
           console.log(data)

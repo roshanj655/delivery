@@ -7,11 +7,11 @@
     <tbody>
     <tr *ngFor="let item of scouts">
       <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.user }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.Phone?item.userDetails.Phone:"Not Available" }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.Email?item.userDetails.Email:"Not Available" }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails.City }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails?.Phone?item.userDetails.Phone:"Not Available" }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails?.Email?item.userDetails.Email:"Not Available" }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails?.City }}</td>
       <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item | distance:cOrder.pickDetails }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item | substring:0:40 }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)"><span *ngFor="let task of item.userDetails?.task">{{ task.orderId }},</span></td>
       <td class="mdl-data-table__cell--non-numeric"><button id="astask"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue" (click)="openmodal(item)"  data-toggle="modal" data-target="#myModal">assign task</button></td>
     </tr>
     </tbody>

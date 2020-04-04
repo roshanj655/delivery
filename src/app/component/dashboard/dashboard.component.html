@@ -18,13 +18,13 @@
                 ngClass="background-color--{{ item.user }} {{item.status}}">
             <span class="text">{{ item.user[0] }}</span>
           </span>
-          <span>{{ item.user }}</span><br>
+          <span>{{ item.userDetails.Name?item.userDetails.Name:item.user }}</span><br>
           <span
-            class="mdl-list__item-sub-title">{{ item.id }}</span>
+            class="mdl-list__item-sub-title">{{ item.userDetails.Address }}, {{ item.userDetails.City }}, {{ item.userDetails.State }}</span>
         </span>
-        <span class="mdl-list__item-secondary-content">
+        <!-- <span class="mdl-list__item-secondary-content">
           <span class="label label--transparent">{{ item.user }}</span>
-        </span>
+        </span> -->
       </li>
     </ul>
     </div>
@@ -120,7 +120,7 @@
       </div>
     </div>
   </div>
-  <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone whitebg">
+  <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone whitebg tableScout" *ngIf="sTableShow">
     <app-scouts-table [scouts]="scoutTableData" [cOrder]="cOrder" [ongoingorders]="ongoingorders" (sOrders)="getSItenary($event)" (cScout)="getSdataFromAssignBut($event)"></app-scouts-table>
   </div>
 <input type="hidden" id="oid">

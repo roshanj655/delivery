@@ -10,17 +10,9 @@
            
             <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone form__article">
                 <h3 class="text-color--smooth-gray">Fill User information</h3>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
-                  <input class="mdl-textfield__input" type="text" id="floating-first-name" formControlName="user">
-                  <label class="mdl-textfield__label" for="floating-first-name">First Name</label>
-                </div>
-                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size">
-                  <input class="mdl-textfield__input" type="text" id="floating-last-name">
-                  <label class="mdl-textfield__label" for="floating-last-name">Last Name</label>
-                </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="userDetails">
-                  <input class="mdl-textfield__input" type="text" id="floating-e-mail" formControlName="Email">
-                  <label class="mdl-textfield__label" for="floating-e-mail">Email</label>
+                  <input class="mdl-textfield__input" type="text" id="floating-first-name" formControlName="Name">
+                  <label class="mdl-textfield__label" for="floating-first-name">Name</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="userDetails">
                     <input class="mdl-textfield__input" type="text" id="floating-phone" formControlName="Phone">
@@ -47,6 +39,14 @@
             <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone form__article">
                 <h3 class="text-color--smooth-gray">Fill Pickup Details</h3>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="pickDetails">
+                  <input class="mdl-textfield__input" type="text" id="floating-address" formControlName="Name">
+                  <label class="mdl-textfield__label" for="floating-address">Name</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="pickDetails">
+                  <input class="mdl-textfield__input" type="text" id="floating-address" formControlName="Phone">
+                  <label class="mdl-textfield__label" for="floating-address">Phone</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="pickDetails">
                     <input class="mdl-textfield__input" type="text" id="floating-address" formControlName="Address">
                     <label class="mdl-textfield__label" for="floating-address">Address</label>
                   </div>
@@ -62,9 +62,21 @@
                 <input class="mdl-textfield__input" type="text" id="floating-zip" formControlName="Zip">
                 <label class="mdl-textfield__label" for="floating-zip">Zip</label>
               </div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="pickDetails">
+                <input class="mdl-textfield__input datepicker" type="date" id="floating-zip" formControlName="Date">
+                <label class="mdl-textfield__label" for="floating-zip">Pickup Date</label>
+              </div>
             </div>
             <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--12-col-tablet mdl-cell--4-col-phone form__article">
                 <h3 class="text-color--smooth-gray">Fill Dropdown Details</h3>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="dropDetails">
+                  <input class="mdl-textfield__input" type="text" id="floating-address" formControlName="Name">
+                  <label class="mdl-textfield__label" for="floating-address">Name</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="dropDetails">
+                  <input class="mdl-textfield__input" type="text" id="floating-address" formControlName="Phone">
+                  <label class="mdl-textfield__label" for="floating-address">Phone</label>
+                </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label full-size" formGroupName="dropDetails">
                     <input class="mdl-textfield__input" type="text" id="floating-address" formControlName="Address">
                     <label class="mdl-textfield__label" for="floating-address">Address</label>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DashboardService } from 'src/services/dashboard.service';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -12,13 +12,13 @@ export class OrdersComponent implements OnInit {
   constructor(private fb: FormBuilder, private dashService:DashboardService) { }
   showalert:boolean=false;
   bioSection = this.fb.group({
-    id: ["Cust_18"],
-    user: [""],
+    id: "new",
+    user: ["Customer"],
     status: ["0"],
     userDetails: this.fb.group({
       UserType: ['Customer'],
-      Email: ['Customer'],
-      Phone: ['Customer'],
+      Name: [''],
+      Phone: [''],
       Address: [''],
       UserGrade: ['Primary'],
       City: [''],
@@ -29,7 +29,9 @@ export class OrdersComponent implements OnInit {
       comment: ['User can be Customer,Scout or Admin']
     }),
     pickDetails: this.fb.group({
-      Date: ["25-051982"],
+      Date: [''],
+      Name:[''],
+      Phone:[''],
       Address: [''],
       City: [''],
       State: [''],
@@ -40,16 +42,20 @@ export class OrdersComponent implements OnInit {
     }),
     dropDetails: this.fb.group({
       Date: ["25-051982"],
+      Name:[''],
+      Phone:[''],
       Address: [''],
       City: [''],
       State: [''],
       Zip: [''],
       lat: [''],
       lng: [''],
+      CashTopay:['1'],
       Comments: "pickDetails"
     })
   });
   ngOnInit(): void {
+    
   }
   callingFunction() {
     

@@ -16,16 +16,23 @@ export class ScoutsAssignedOrdersComponent implements OnInit {
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.onGoingOrder, event.previousIndex, event.currentIndex);
     this.ordersPChange=[];
+    this.scout.fcmtoken="newOrderForScout";
     this.onGoingOrder.forEach(element => {
-      this.ordersPChange.push(element.id);
+      this.scout.userDetails.task.forEach(scoutElement => {
+        if(scoutElement.orderId==element.id)
+        {
+          this.ordersPChange.push(scoutElement);
+        }
+      })
+      //this.ordersPChange.push(element.id);
     });
-    this.scout.userDetails.orderid=this.ordersPChange;
-    this.scout.ScoutLocation.lng=this.scout.ScoutLocation.lng.toString();
-    this.scout.ScoutLocation.lat=this.scout.ScoutLocation.lat.toString();
-    console.log(this.scout);
+    this.scout.userDetails.task=this.ordersPChange;
+    //this.scout.ScoutLocation.lng=this.scout.ScoutLocation.lng.toString();
+    //this.scout.ScoutLocation.lat=this.scout.ScoutLocation.lat.toString();
+    //console.log(this.scout);
     this.dashService.addScouts(this.scout).subscribe(data=>{
       //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-      console.log(data)
+      //console.log(data)
     });
   }
   assigntask()

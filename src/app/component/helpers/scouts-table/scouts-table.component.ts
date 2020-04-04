@@ -26,9 +26,9 @@ export class ScoutsTableComponent implements OnInit {
         this.itenary=[];
         this.scout=scouts;
 
-        scouts.userDetails.orderid.forEach(element1 => {
+        scouts.userDetails.task.forEach(element1 => {
           orderdata.forEach(element => {
-            if(element1==element.id )
+            if(element1.orderId==element.id )
             {
             this.itenary.push(element);
             }

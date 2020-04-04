@@ -9,8 +9,8 @@ export class DistancePipe implements PipeTransform {
     //return value.ScoutLocation.lat;
     let lat1=args.lat;
     let lon1=args.lng;
-    let lat2=value.ScoutLocation.lat;
-    let lon2=value.ScoutLocation.lng;
+    let lat2=value.ScoutLocation?.lat;
+    let lon2=value.ScoutLocation?.lng;
     if ((lat1 == lat2) && (lon1 == lon2)) {
       return 0;
     }
