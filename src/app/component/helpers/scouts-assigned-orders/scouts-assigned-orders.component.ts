@@ -8,8 +8,10 @@ import { DashboardService } from 'src/services/dashboard.service';
 })
 export class ScoutsAssignedOrdersComponent implements OnInit {
   @Input() onGoingOrder;
+  @Input() completedOrder;
   @Input() scout;
   ordersPChange:any=[];
+  showTitle:boolean=false;
   constructor(private dashService:DashboardService) { }
   
 
@@ -27,17 +29,24 @@ export class ScoutsAssignedOrdersComponent implements OnInit {
       //this.ordersPChange.push(element.id);
     });
     this.scout.userDetails.task=this.ordersPChange;
-    //this.scout.ScoutLocation.lng=this.scout.ScoutLocation.lng.toString();
-    //this.scout.ScoutLocation.lat=this.scout.ScoutLocation.lat.toString();
+    this.scout.ScoutLocation.lng=this.scout.ScoutLocation.lng.toString();
+    this.scout.ScoutLocation.lat=this.scout.ScoutLocation.lat.toString();
     //console.log(this.scout);
     this.dashService.addScouts(this.scout).subscribe(data=>{
       //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-      //console.log(data)
+      console.log(data)
     });
   }
   assigntask()
   {
     
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    if(this.onGoingOrder[0].id)
+    {
+    this.showTitle=true;}
   }
 
   ngOnInit(): void {

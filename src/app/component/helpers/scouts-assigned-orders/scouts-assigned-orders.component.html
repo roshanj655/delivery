@@ -1,6 +1,26 @@
-
-            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let item of onGoingOrder" cdkDrag>{{item.pickDetails.Address}}, {{item.pickDetails.City}}, {{item.pickDetails.State}}</div>
-              </div>
-       
-  
+<div class="maintasklist">
+  <div class="example-list">
+    <h4 *ngIf="showTitle">Completed Task</h4>
+    <span *ngFor="let item of onGoingOrder">
+      <div class="example-box" *ngIf="item.userDetails.taskStatus == 2">
+        <span class="material-icons">
+          done_all
+        </span>
+        {{ item.pickDetails.Address }}, {{ item.pickDetails.City }},
+        {{ item.pickDetails.State }}
+      </div>
+    </span>
+  </div>
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+    <h4 *ngIf="showTitle">Ongoing Task</h4>
+    <span *ngFor="let item of onGoingOrder">
+      <div class="example-box" cdkDrag *ngIf="item.userDetails.taskStatus != 2">
+        <span class="material-icons">
+          done
+        </span>
+        {{ item.pickDetails.Address }}, {{ item.pickDetails.City }},
+        {{ item.pickDetails.State }}
+      </div>
+    </span>
+  </div>
+</div>

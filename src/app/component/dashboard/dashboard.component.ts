@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   sTableShow:boolean=false;
   showCompleteBut:boolean=false;
   succesmsg:string;
-  x:number=80;
+  x:number=200;
   myLatLng:any = {lat: 28.41252, lng: 77.31977};
   
   showalert:boolean=false;
@@ -108,7 +108,6 @@ export class DashboardComponent implements OnInit {
      this.scoutTableData=this.scouts;
      this.ongoingorders=this.ongoingorders;
       this.cOrder=taskData;
-      console.log(taskData);
      $("#oid").val(JSON.stringify(taskData));
               document.querySelector('.map__target-title').innerHTML = taskData.userDetails.Name?taskData.userDetails.Name:taskData.user;
               document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City?taskData.pickDetails.City:'NA'},${taskData.pickDetails.State?taskData.pickDetails.State:"NA"}`;
@@ -127,7 +126,6 @@ export class DashboardComponent implements OnInit {
     }
     getSItenary(data)
     {
-      console.log(data);
       this.itenary=data.oData;
       this.scout=data.sData;
     }
@@ -158,10 +156,14 @@ export class DashboardComponent implements OnInit {
       this.addmarker(mylatlang);
       
      this.markers.forEach(element => {
+       
        if(element.ScoutLocation) {
+         
           var dis=this.distance(mylatlang.lat, mylatlang.lng,parseFloat(element.ScoutLocation.lat), parseFloat(element.ScoutLocation.lng),'K');
-         if(dis<=this.x)
+      
+          if(dis<=this.x)
          {
+          console.log('scout',element.ScoutLocation);
           this.addmarker(element);
          }
         }
@@ -169,7 +171,6 @@ export class DashboardComponent implements OnInit {
     }
     addmarker(prop)
         {
-          console.log(prop);
           if(prop.ScoutLocation)
           {
           prop.ScoutLocation.lat=parseFloat(prop.ScoutLocation.lat);
@@ -240,40 +241,45 @@ export class DashboardComponent implements OnInit {
       {
         var a=JSON.parse($(document).find("#sdata").val());
         var order=JSON.parse($("#oid").val());
-       // a.ScoutLocation.lng=typeof a.ScoutLocation.lng=='string'?a.ScoutLocation.lng:a.ScoutLocation.lng.toString();
-       // a.ScoutLocation.lat=typeof a.ScoutLocation.lat=='string'?a.ScoutLocation.lat:a.ScoutLocation.lat.toString();
+        if(order.status!="0"){
+          alert('Please select new Order to assign');
+        }
+        else {
+        a.ScoutLocation.lng=typeof a.ScoutLocation.lng=='string'?a.ScoutLocation.lng:a.ScoutLocation.lng.toString();
+        a.ScoutLocation.lat=typeof a.ScoutLocation.lat=='string'?a.ScoutLocation.lat:a.ScoutLocation.lat.toString();
         a.fcmtoken="newOrderForScout";
         var newtask={
           orderId:order.id,
           date:Date.now(),
-          status:1
+          status:0
         };
         a.pickDetails={"lat":order.pickDetails.lat,"lng":order.pickDetails.lng};
         a.dropDetails={"lat":order.dropDetails.lat,"lng":order.dropDetails.lng};
         if($.isArray(a.userDetails.task))
         {
           a.userDetails.task.push(newtask);
-           
         }
         else{
           a.userDetails.task=[newtask];
         }
       // console.log(a);
         order.status="1";
+        
         this.dashService.addScouts(a).subscribe(data=>{
-          //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-        //  console.log(data)
+          this.dashService.getScouts().subscribe(data=>{
+            this.scouts=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
+            this.scoutTableData=[];
+            this.scoutTableData=this.scouts;
+            console.log(data);
+          });
         });
         console.log(order);
         this.dashService.addorders(order).subscribe(data=>{
-          //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
-          console.log(data)
           this.getdata();
         });
         this.showalert=true;
         this.succesmsg="Task assigned to scout";
-        //$('#myModal').modal('hide');
-        //console.log(data);
+      }
       }
       close()
       {
@@ -298,11 +304,13 @@ export class DashboardComponent implements OnInit {
         return 0;
       }
       else {
+        
         var radlat1 = Math.PI * lat1/180;
         var radlat2 = Math.PI * lat2/180;
         var theta = lon1-lon2;
         var radtheta = Math.PI * theta/180;
         var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        
         if (dist > 1) {
           dist = 1;
         }

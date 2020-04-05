@@ -2,11 +2,13 @@
     min-height: 60px;
     display: block;
     border-radius: 4px;
-    overflow: hidden;
+    
+  }
+  .maintasklist
+  {
     height: 500px;
   overflow: auto;
   }
-  
   .example-box {
     padding: 19px 10px;
     border-bottom: solid 1px #575757;

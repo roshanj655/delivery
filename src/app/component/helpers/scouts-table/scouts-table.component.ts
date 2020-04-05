@@ -30,6 +30,7 @@ export class ScoutsTableComponent implements OnInit {
           orderdata.forEach(element => {
             if(element1.orderId==element.id )
             {
+              element.userDetails.taskStatus=element1.status;
             this.itenary.push(element);
             }
           });

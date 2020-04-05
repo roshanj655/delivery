@@ -22,6 +22,9 @@ export class DashboardService {
   getOrders():Observable<any>{
     return this.http.get(this.apiUrl+"orders");
   }
+  getOrdersById(id):Observable<any>{
+    return this.http.get("https://f4f1e2pdg8.execute-api.ap-south-1.amazonaws.com/startJhutpat/order?id="+id);
+  }
   getOrdersbyStatus(status):Observable<any>{
     return this.http.get("https://lukuucm71l.execute-api.ap-south-1.amazonaws.com/startJhutpat/order?status="+status);
   }
