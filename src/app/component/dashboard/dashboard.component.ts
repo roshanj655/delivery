@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   neworders:any=[];
   ongoingorders:any=[];
   completeorders:any=[];
+  allorders:any=[];
   itenary:any=[];
   scoutTableData:any=[];
   scout:any;
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit {
   sTableShow:boolean=false;
   showCompleteBut:boolean=false;
   succesmsg:string;
+  ordertype:string;
   x:number=200;
   myLatLng:any = {lat: 28.41252, lng: 77.31977};
   
@@ -55,6 +57,9 @@ export class DashboardComponent implements OnInit {
 
     }
     getdata(){
+      this.dashService.getOrders().subscribe(data=>{
+        this.allorders=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
+      });
       this.dashService.getOrdersbyStatus(0).subscribe(data=>{
         this.neworders=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
         this.checkOrderTime();
@@ -82,40 +87,41 @@ export class DashboardComponent implements OnInit {
     this.message = this.messagingService.currentMessage
     
     }
-    locatOnGoingTask(taskData)
+    locatOnGoingTask(taskData,type)
     {
+      this.cOrder=taskData;
+      //taskData=type=='pickDetails'?taskData.pickDetails:taskData.dropDetails;
       this.showCompleteBut=true;
       this.sTableShow=true;
      this.scoutTableData=this.scouts;
      this.ongoingorders=this.ongoingorders;
-      this.cOrder=taskData;
+      
       console.log(taskData);
      $("#oid").val(JSON.stringify(taskData));
-              document.querySelector('.map__target-title').innerHTML = taskData.userDetails.Name?taskData.userDetails.Name:taskData.user;
-              document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City?taskData.pickDetails.City:'NA'},${taskData.pickDetails.State?taskData.pickDetails.State:"NA"}`;
-              document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.dropDetails.Address},${taskData.dropDetails.City?taskData.dropDetails.City:'NA'},${taskData.dropDetails.State?taskData.dropDetails.State:"NA"}`;
-              document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
-              document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
-              
-      this.initmap({lat:parseFloat(taskData.pickDetails.lat),lng:parseFloat(taskData.pickDetails.lng)});
-      this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
+     document.querySelector('.map__target-title').innerHTML = taskData.Name?taskData.Name:"NA";
+     document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.Address},${taskData.City?taskData.City:'NA'},${taskData.State?taskData.State:"NA"}`;
+     document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.Date}`;
+
+      this.initmap({lat:parseFloat(taskData.lat),lng:parseFloat(taskData.lng)});
+      //this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
      
     }
-    locatTask(taskData)
+    locatTask(taskData,type)
     {
+      this.cOrder=taskData;
+      this.ordertype=type;
+     // taskData=type=='pickDetails'?taskData.pickDetails:taskData.dropDetails;
       this.showCompleteBut=false;
       this.sTableShow=true;
      this.scoutTableData=this.scouts;
      this.ongoingorders=this.ongoingorders;
-      this.cOrder=taskData;
      $("#oid").val(JSON.stringify(taskData));
-              document.querySelector('.map__target-title').innerHTML = taskData.userDetails.Name?taskData.userDetails.Name:taskData.user;
-              document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.pickDetails.Address},${taskData.pickDetails.City?taskData.pickDetails.City:'NA'},${taskData.pickDetails.State?taskData.pickDetails.State:"NA"}`;
-              document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.dropDetails.Address},${taskData.dropDetails.City?taskData.dropDetails.City:'NA'},${taskData.dropDetails.State?taskData.dropDetails.State:"NA"}`;
-              document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.pickDetails.Date}`;
+              document.querySelector('.map__target-title').innerHTML = taskData.Name?taskData.Name:"NA";
+              document.querySelector('.map__pickup-location').innerHTML = `<i class=\"material-icons\">room</i>${taskData.Address},${taskData.City?taskData.City:'NA'},${taskData.State?taskData.State:"NA"}`;
+              document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">date_range</i>${taskData.Date}`;
               
       this.initmap({lat:parseFloat(taskData.pickDetails.lat),lng:parseFloat(taskData.pickDetails.lng)});
-      this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
+      //this.addmarker({lat:parseFloat(taskData.dropDetails.lat),lng:parseFloat(taskData.dropDetails.lng)});
       
     }
     
@@ -129,25 +135,6 @@ export class DashboardComponent implements OnInit {
       this.itenary=data.oData;
       this.scout=data.sData;
     }
-    // scoutDetails(scoutData)
-    // {
-    //   console.log(scoutData);
-      
-    //  document.querySelector('.map__target-title').innerHTML = scoutData.user;
-    //  document.querySelector('.map__target-location').innerHTML = `<i class=\"material-icons\">room</i>${scoutData.userDetails.Address},${scoutData.userDetails.City},${scoutData.userDetails.State}`;
-    //  document.querySelector('.map__target-opening-hours').innerHTML = `<i class=\"material-icons\">query_builder</i>${scoutData.userDetails.orderid}`;
-    //  document.querySelector('.map__target-description').innerHTML = `${scoutData.description} <input type="hidden" id="sdata"> <button id="astask" data="`+JSON.stringify(scoutData)+`"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue"  data-toggle="modal" data-target="#myModal">assign task</button>`;
-    //  (document.querySelector('.map__target-picture') as HTMLElement).style.backgroundPositionX = scoutData.image;
-    //  document.querySelector('.map__target-picture').classList.toggle('map__target-picture--hide');
-    //  document.querySelector('.map__target-info').classList.toggle('map__target-info--hide');
-     
-    //  document.getElementById("astask").addEventListener('click',()=>{
-    //    $("#sdata").val(JSON.stringify(scoutData));
-    //   this.singleScouts=scoutData;
-    //  })
-     
-      
-    // }
     initmap(mylatlang){
       this.map = new google.maps.Map(document.getElementById('map'), {
         center: mylatlang,
@@ -251,7 +238,8 @@ export class DashboardComponent implements OnInit {
         var newtask={
           orderId:order.id,
           date:Date.now(),
-          status:0
+          status:0,
+          type:this.ordertype,
         };
         a.pickDetails={"lat":order.pickDetails.lat,"lng":order.pickDetails.lng};
         a.dropDetails={"lat":order.dropDetails.lat,"lng":order.dropDetails.lng};
@@ -262,7 +250,7 @@ export class DashboardComponent implements OnInit {
         else{
           a.userDetails.task=[newtask];
         }
-      // console.log(a);
+       //console.log(a);
         order.status="1";
         
         this.dashService.addScouts(a).subscribe(data=>{
@@ -273,10 +261,10 @@ export class DashboardComponent implements OnInit {
             console.log(data);
           });
         });
-        console.log(order);
-        this.dashService.addorders(order).subscribe(data=>{
-          this.getdata();
-        });
+        //console.log(order);
+        // this.dashService.addorders(order).subscribe(data=>{
+        //   this.getdata();
+        // });
         this.showalert=true;
         this.succesmsg="Task assigned to scout";
       }

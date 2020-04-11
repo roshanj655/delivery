@@ -6,12 +6,12 @@
     </thead>
     <tbody>
     <tr *ngFor="let item of scouts">
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.user }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails?.phone?item.userDetails.phone:"Not Available" }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails?.email?item.userDetails.email:"Not Available" }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item.userDetails?.City }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)">{{ item | distance:cOrder.pickDetails }}</td>
-      <td class="mdl-data-table__cell--non-numeric" (click)="openite(ongoingorders,item)"><span *ngFor="let task of item.userDetails?.task">{{ task.orderId }},</span></td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(allOrders,item)">{{ item.user }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(allOrders,item)">{{ item.userDetails?.phone?item.userDetails.phone:"Not Available" }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(allOrders,item)">{{ item.userDetails?.email?item.userDetails.email:"Not Available" }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(allOrders,item)">{{ item.userDetails?.City }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(allOrders,item)">{{ item | distance:cOrder.pickDetails }}</td>
+      <td class="mdl-data-table__cell--non-numeric" (click)="openite(allOrders,item)"><span *ngFor="let task of item.userDetails?.task">{{ task.orderId }},</span></td>
       <td class="mdl-data-table__cell--non-numeric"><button id="astask"  class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect button--colored-light-blue" (click)="openmodal(item)"  data-toggle="modal" data-target="#myModal">assign task</button></td>
     </tr>
     </tbody>

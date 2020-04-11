@@ -8,7 +8,7 @@ import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@
 export class ScoutsTableComponent implements OnInit {
   headers:any;
   @Input() scouts:any;
-  @Input() ongoingorders:any;
+  @Input() allOrders:any;
   @Input() cOrder:any;
   @Output() sOrders = new EventEmitter<any>();
   @Output() cScout = new EventEmitter<any>();
@@ -30,8 +30,16 @@ export class ScoutsTableComponent implements OnInit {
           orderdata.forEach(element => {
             if(element1.orderId==element.id )
             {
-              element.userDetails.taskStatus=element1.status;
-            this.itenary.push(element);
+              
+              if(element1.type=='pick') {
+                element.pickDetails.orderid=element.id;
+                this.itenary.push(element.pickDetails);
+              }
+              else
+              {
+                element.dropDetails.orderid=element.id;
+                this.itenary.push(element.dropDetails);
+              }
             }
           });
         });
