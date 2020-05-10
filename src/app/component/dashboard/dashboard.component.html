@@ -12,8 +12,8 @@
         <div class="tab tab1">
       <ul
       class="mdl-list messages-dropdown">
-      <span *ngFor="let item of neworders">
-        <li (click)="locatTask(item,'pick')" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
+      <span *ngFor="let item of allorders">
+        <li (click)="locatTask(item,'pick')"  *ngIf="item.pickDetails.status=='0'" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
           <span class="mdl-list__item-primary-content">
             <span class="mdl-list__item-avatar"
                   ngClass="background-color--{{ item.user }} {{item.status}}">
@@ -27,7 +27,7 @@
             <span class="label label--transparent">Pickup</span>
           </span>
         </li>
-        <li (click)="locatTask(item,'drop')" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
+        <li (click)="locatTask(item,'drop')"  *ngIf="item.dropDetails.status==0" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
           <span class="mdl-list__item-primary-content">
             <span class="mdl-list__item-avatar"
                   ngClass="background-color--{{ item.user }} {{item.status}}">
@@ -47,8 +47,8 @@
     <div class="tab tab2 hide">
     <ul
       class="mdl-list messages-dropdown">
-      <span *ngFor="let item of ongoingorders">
-      <li (click)="locatOnGoingTask(item,'pick')" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
+      <span *ngFor="let item of allorders">
+      <li (click)="locatOnGoingTask(item,'pick')"  *ngIf="item.pickDetails.status==1" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
         <span class="mdl-list__item-primary-content">
           <span class="mdl-list__item-avatar"
                 ngClass="background-color--{{ item.user }} {{item.status}}">
@@ -62,7 +62,7 @@
           <span class="label label--transparent">Pickup</span>
         </span>
       </li>
-      <li (click)="locatOnGoingTask(item,'drop')" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
+      <li (click)="locatOnGoingTask(item,'drop')"  *ngIf="item.dropDetails.status==1" style="margin: 10px 0px;" class="mdl-list__item mdl-list__item--two-line list__item--border-top">
         <span class="mdl-list__item-primary-content">
           <span class="mdl-list__item-avatar"
                 ngClass="background-color--{{ item.user }} {{item.status}}">

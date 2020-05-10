@@ -18,6 +18,7 @@ export class OrdersComponent implements OnInit {
     userDetails: this.fb.group({
       UserType: ['Customer'],
       Name: [''],
+      status: ["0"],
       Phone: [''],
       Address: [''],
       UserGrade: ['Primary'],
@@ -33,6 +34,7 @@ export class OrdersComponent implements OnInit {
       Date: [''],
       Name:[''],
       Phone:[''],
+      status: ["0"],
       Address: [''],
       City: [''],
       State: [''],
@@ -45,6 +47,7 @@ export class OrdersComponent implements OnInit {
       Date: [Date()],
       Name:[''],
       Phone:[''],
+      status: ["0"],
       Address: [''],
       City: [''],
       State: [''],

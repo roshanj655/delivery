@@ -235,9 +235,27 @@ export class DashboardComponent implements OnInit {
         a.ScoutLocation.lng=typeof a.ScoutLocation.lng=='string'?a.ScoutLocation.lng:a.ScoutLocation.lng.toString();
         a.ScoutLocation.lat=typeof a.ScoutLocation.lat=='string'?a.ScoutLocation.lat:a.ScoutLocation.lat.toString();
         a.fcmtoken="newOrderForScout";
+       if(this.ordertype=='pick')
+       {
+           order.pickDetails.status="1";
+          var OrderDataForTask=order.pickDetails;
+       }
+       else
+       {
+        order.dropDetails.status="1";
+        var OrderDataForTask=order.dropDetails;
+       }
         var newtask={
           orderId:order.id,
           date:Date.now(),
+          Phone:OrderDataForTask.Phone,
+          lat:OrderDataForTask.lat,
+          lng:OrderDataForTask.lng,
+          address:OrderDataForTask.Address,
+          city:OrderDataForTask.City,
+          state:OrderDataForTask.State,
+          zip:OrderDataForTask.Zip,
+          cashtocollect:100,
           status:0,
           type:this.ordertype,
         };
@@ -251,14 +269,18 @@ export class DashboardComponent implements OnInit {
           a.userDetails.task=[newtask];
         }
        //console.log(a);
-        order.status="1";
+        //order.status="1";
         
         this.dashService.addScouts(a).subscribe(data=>{
           this.dashService.getScouts().subscribe(data=>{
             this.scouts=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
             this.scoutTableData=[];
             this.scoutTableData=this.scouts;
-            console.log(data);
+            this.dashService.addorders(order).subscribe(data=>{
+              //this.messages=data.body.Items.sort((a, b) => (a.id < b.id) ? 1 : -1);
+              console.log(data);
+              //this.bioSection.reset();
+            });
           });
         });
         //console.log(order);
